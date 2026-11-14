@@ -1,22 +1,22 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { cores, fontes } from '../theme/tema'
+
+type Props = {
+  titulo?: string
+  mensagem?: string
+  textoAcao?: string
+  onDesfazer?: () => void
+}
 
 const ConfirmacaoVaga = ({
   titulo = 'Tudo certo, avisamos a unidade',
   mensagem = 'Obrigada por avisar. Sua vaga vai ajudar outra pessoa da fila. Você continua na fila para uma nova data.',
   textoAcao = 'Desfazer, eu vou',
   onDesfazer,
-}) => {
+}: Props) => {
   return (
-    <View
-      style={styles.container}
-      accessibilityLiveRegion="polite"
-      accessibilityRole="alert"
-    >
-      <Text style={styles.titulo} accessibilityRole="header">
-        {titulo}
-      </Text>
-
+    <View style={styles.container} accessibilityLiveRegion="polite" accessibilityRole="alert">
+      <Text style={styles.titulo} accessibilityRole="header">{titulo}</Text>
       <Text style={styles.mensagem}>{mensagem}</Text>
 
       {onDesfazer && (
@@ -36,42 +36,13 @@ const ConfirmacaoVaga = ({
 export default ConfirmacaoVaga
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#75BFA5',
-    borderRadius: 24,
-    padding: 24,
-    gap: 16,
-  },
-  titulo: {
-    fontFamily: 'PlusJakartaSans-ExtraBold',
-    fontSize: 24,
-    fontWeight: '800',
-    lineHeight: 30,
-    color: '#34423D',
-  },
-  mensagem: {
-    fontFamily: 'Lato-Regular', 
-    fontSize: 17,
-    lineHeight: 26,
-    color: '#34423D',
-  },
+  container: { backgroundColor: cores.verdeClaro, borderRadius: 24, padding: 24, gap: 16 },
+  titulo: { fontFamily: fontes.tituloForte, fontSize: 24, lineHeight: 30, color: cores.texto },
+  mensagem: { fontFamily: fontes.regular, fontSize: 17, lineHeight: 26, color: cores.texto },
   acao: {
-    minHeight: 52,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: '#34423D',
-    justifyContent: 'center',
-    alignItems: 'center',
+    minHeight: 52, paddingHorizontal: 20, paddingVertical: 12, borderRadius: 999,
+    borderWidth: 2, borderColor: cores.texto, justifyContent: 'center', alignItems: 'center',
   },
-  acaoPressionada: {
-    backgroundColor: '#F4F1F8',
-  },
-  acaoTexto: {
-    fontFamily: 'Lato-Bold', 
-    fontSize: 17,
-    fontWeight: '700',
-    color: '#34423D',
-  },
+  acaoPressionada: { backgroundColor: cores.roxoClaro },
+  acaoTexto: { fontFamily: fontes.bold, fontSize: 17, color: cores.texto },
 })

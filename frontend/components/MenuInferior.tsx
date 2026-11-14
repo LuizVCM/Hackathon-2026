@@ -1,18 +1,20 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Aba } from '../navigation/tipos'
+import { cores, fontes } from '../theme/tema'
 
-const ROXO = '#6845A5'
-const TEXTO = '#34423D'
+type Icone = keyof typeof Ionicons.glyphMap
 
-const ITENS = [
-  { chave: 'inicio', rotulo: 'Início', icone: 'home' },
-  { chave: 'horarios', rotulo: 'Horários', icone: 'calendar' },
-  { chave: 'saude', rotulo: 'Saúde', icone: 'heart' },
-  { chave: 'ajuda', rotulo: 'Ajuda', icone: 'call' },
+const ITENS: { chave: Aba; rotulo: string; icone: Icone; iconeAtivo: Icone }[] = [
+  { chave: 'inicio', rotulo: 'Início', icone: 'home-outline', iconeAtivo: 'home' },
+  { chave: 'filas', rotulo: 'Minhas filas', icone: 'list-outline', iconeAtivo: 'list' },
+  { chave: 'lembretes', rotulo: 'Lembretes', icone: 'notifications-outline', iconeAtivo: 'notifications' },
+  { chave: 'ajuda', rotulo: 'Ajuda', icone: 'help-circle-outline', iconeAtivo: 'help-circle' },
 ]
 
-const MenuInferior = ({ ativa = 'inicio', onMudar }) => {
+type Props = { ativa?: Aba; onMudar?: (aba: Aba) => void }
+
+const MenuInferior = ({ ativa = 'inicio', onMudar }: Props) => {
   return (
     <View style={styles.barra} accessibilityRole="tablist">
       {ITENS.map((item) => {
@@ -28,11 +30,11 @@ const MenuInferior = ({ ativa = 'inicio', onMudar }) => {
             style={[styles.item, selecionada && styles.itemAtivo]}
           >
             <Ionicons
-              name={selecionada ? item.icone : `${item.icone}-outline`}
+              name={selecionada ? item.iconeAtivo : item.icone}
               size={24}
-              color={selecionada ? ROXO : TEXTO}
+              color={selecionada ? cores.roxo : cores.texto}
             />
-            <Text style={[styles.rotulo, selecionada && styles.rotuloAtivo]}>
+            <Text style={[styles.rotulo, selecionada && styles.rotuloAtivo]} numberOfLines={1}>
               {item.rotulo}
             </Text>
           </Pressable>
@@ -46,45 +48,16 @@ export default MenuInferior
 
 const styles = StyleSheet.create({
   barra: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    marginHorizontal: 12,
-    marginBottom: 16,
-    shadowColor: '#000000',
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 8,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
+    backgroundColor: cores.branco, borderRadius: 24, paddingVertical: 8, paddingHorizontal: 8,
+    marginHorizontal: 12, marginBottom: 16, shadowColor: '#000000', shadowOpacity: 0.08,
+    shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 8,
   },
   item: {
-    flex: 1,
-    minHeight: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 999,
-    borderWidth: 2,
-    borderColor: 'transparent',
-    paddingVertical: 6,
-    paddingHorizontal: 4,
-    gap: 2,
+    flex: 1, minHeight: 56, alignItems: 'center', justifyContent: 'center', borderRadius: 999,
+    borderWidth: 2, borderColor: 'transparent', paddingVertical: 6, paddingHorizontal: 4, gap: 2,
   },
-  itemAtivo: {
-    backgroundColor: '#F4F1F8',
-    borderColor: '#6845A5',
-  },
-  rotulo: {
-    fontFamily: 'Lato-Regular', // precisa estar carregada com expo-font
-    fontSize: 14,
-    color: '#34423D',
-  },
-  rotuloAtivo: {
-    fontFamily: 'Lato-Bold', // precisa estar carregada com expo-font
-    fontWeight: '700',
-    color: '#6845A5',
-  },
+  itemAtivo: { backgroundColor: cores.roxoClaro, borderColor: cores.roxo },
+  rotulo: { fontFamily: fontes.regular, fontSize: 12, color: cores.texto },
+  rotuloAtivo: { fontFamily: fontes.bold, color: cores.roxo },
 })
