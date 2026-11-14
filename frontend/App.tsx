@@ -1,11 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Head from './components/Head';
+import MenuInferior from './components/MenuInferior';
+import { useState } from 'react';
 
 export default function App() {
+  const [aba, setAba] = useState('inicio')
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start on your agghghpp!</Text>
+      <Head/>
       <StatusBar style="auto" />
+      <MenuInferior ativa={aba} onMudar={setAba}/>
+      
     </View>
   );
 }
