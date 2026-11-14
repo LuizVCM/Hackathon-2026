@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
+import { useSaude } from '../context/SaudeContext'
+import Aviso from './Aviso'
 import Head from './Head'
 import { cores } from '../theme/tema'
 
@@ -11,7 +13,9 @@ type Props = {
   children: ReactNode
 }
 
-const Tela = ({ titulo, subtitulo, sobrepor = false, children }: Props) => (
+const Tela = ({ titulo, subtitulo, sobrepor = false, children }: Props) => {
+  const { erro } = useSaude()
+  return (
   <ScrollView
     style={styles.tela}
     contentContainerStyle={styles.scroll}
@@ -19,15 +23,16 @@ const Tela = ({ titulo, subtitulo, sobrepor = false, children }: Props) => (
     keyboardShouldPersistTaps="handled"
   >
     <Head titulo={titulo} subtitulo={subtitulo} alto={sobrepor} />
-    <View style={[styles.conteudo, sobrepor && styles.sobrepor]}>{children}</View>
+    <View style={[styles.conteudo, sobrepor && styles.sobrepor]}>{erro ? <Aviso variante="erro" texto={erro} /> : null}{children}</View>
   </ScrollView>
 )
+}
 
 export default Tela
 
 const styles = StyleSheet.create({
   tela: { flex: 1, alignSelf: 'stretch', backgroundColor: cores.roxoClaro },
   scroll: { paddingBottom: 16 },
-  conteudo: { padding: 20, gap: 16 },
+  conteudo: { padding: 24, gap: 16 },
   sobrepor: { marginTop: -40 },
 })

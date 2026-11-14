@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "frontend",
+    "name": "Consulta+",
     "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -28,7 +28,10 @@
     },
     "plugins": [
       "expo-status-bar",
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "scheme": "consulta-mais"
   }
 }

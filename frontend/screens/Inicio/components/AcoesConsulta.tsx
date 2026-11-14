@@ -12,7 +12,7 @@ type Props = {
 }
 
 const AcoesConsulta = ({ confirmada, dataHora, onConfirmar, onDesfazer, onRemarcar, onNaoVou }: Props) => (
-  <View style={{ gap: 16 }}>
+  <View style={{ gap: 8 }}>
     {confirmada ? (
       <ConfirmacaoVaga
         titulo="Presença confirmada"

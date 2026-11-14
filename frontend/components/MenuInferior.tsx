@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12, shadowOffset: { width: 0, height: 4 }, elevation: 8,
   },
   item: {
-    flex: 1, minHeight: 56, alignItems: 'center', justifyContent: 'center', borderRadius: 999,
+    flex: 1, minHeight: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 18,
     borderWidth: 2, borderColor: 'transparent', paddingVertical: 6, paddingHorizontal: 4, gap: 2,
   },
   itemAtivo: { backgroundColor: cores.roxoClaro, borderColor: cores.roxo },

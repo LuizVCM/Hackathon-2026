@@ -1,3 +1,4 @@
+import { useSaude } from '../../../context/SaudeContext'
 import { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Botao from '../../../components/Botao'
@@ -8,16 +9,23 @@ import { cpfCompleto, formatarCpf } from '../../../utils/mascaras'
 type Props = { onEntrar: () => void; onCriarConta: () => void }
 
 const FormularioLogin = ({ onEntrar, onCriarConta }: Props) => {
+  const { entrar } = useSaude()
+  const [carregando, setCarregando] = useState(false)
+  const [erro, setErro] = useState('')
   const [cpf, setCpf] = useState('')
   const [senha, setSenha] = useState('')
   const [erroCpf, setErroCpf] = useState('')
   const [erroSenha, setErroSenha] = useState('')
 
-  const entrar = () => {
+  const enviar = async () => {
     const cpfOk = cpfCompleto(cpf)
     setErroCpf(cpfOk ? '' : 'Digite os 11 números do CPF.')
     setErroSenha(senha ? '' : 'Digite sua senha.')
-    if (cpfOk && senha) onEntrar()
+    if (!cpfOk || !senha || carregando) return
+    setCarregando(true); setErro('')
+    try { await entrar(cpf, senha); onEntrar() }
+    catch (e) { setErro(e instanceof Error ? e.message : 'Falha ao entrar.') }
+    finally { setCarregando(false) }
   }
 
   return (
@@ -30,7 +38,8 @@ const FormularioLogin = ({ onEntrar, onCriarConta }: Props) => {
         rotulo="Senha" placeholder="Digite sua senha" secureTextEntry
         value={senha} onChangeText={setSenha} erro={erroSenha}
       />
-      <Botao variante="verde" rotulo="Entrar" onPress={entrar} />
+      {erro ? <Text accessibilityRole="alert" style={{ color: cores.vermelho }}>{erro}</Text> : null}
+      <Botao variante="verde" rotulo="Entrar" carregando={carregando} onPress={enviar} />
       <Text style={styles.pergunta}>Ainda não tem uma conta?</Text>
       <Botao variante="roxo" rotulo="Criar uma conta" onPress={onCriarConta} />
     </View>

@@ -1,19 +1,27 @@
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native'
+import { useSaude } from '../context/SaudeContext'
 import { cores, fontes } from '../theme/tema'
 
 type Variante = 'verde' | 'roxo' | 'roxoEscuro' | 'contornoRoxo' | 'contornoVermelho'
-type Props = { rotulo: string; onPress?: () => void; variante?: Variante }
+type Props = { rotulo: string; onPress?: () => void; variante?: Variante; carregando?: boolean; desabilitado?: boolean }
 
-const Botao = ({ rotulo, onPress, variante = 'roxo' }: Props) => (
+const Botao = ({ rotulo, onPress, variante = 'roxo', carregando = false, desabilitado = false }: Props) => {
+  const { ocupado } = useSaude()
+  const bloqueado = carregando || desabilitado || ocupado
+  return (
   <Pressable
     accessibilityRole="button"
     accessibilityLabel={rotulo}
     onPress={onPress}
-    style={({ pressed }) => [styles.base, estilos[variante].caixa, pressed && styles.pressionado]}
+    disabled={bloqueado}
+    accessibilityState={{ disabled: bloqueado, busy: carregando }}
+    style={({ pressed }) => [styles.base, estilos[variante].caixa, (pressed || bloqueado) && styles.pressionado]}
   >
+    {carregando ? <ActivityIndicator color={estilos[variante].texto.color} /> : null}
     <Text style={[styles.texto, estilos[variante].texto]}>{rotulo}</Text>
   </Pressable>
 )
+}
 
 export default Botao
 

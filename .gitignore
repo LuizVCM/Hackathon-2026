@@ -1,0 +1,9 @@
+**/node_modules/
+**/.expo/
+**/.npm-cache/
+**/.npm-tmp/
+**/.export-web/
+**/dist/
+**/.env
+importado/
+*.log

@@ -2,16 +2,18 @@ import { Ionicons } from '@expo/vector-icons'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { cores, fontes, sombra } from '../theme/tema'
 
-type Variante = 'atencao' | 'sucesso' | 'info'
+type Variante = 'atencao' | 'sucesso' | 'info' | 'erro'
 type Props = { variante: Variante; titulo?: string; texto: string; onPress?: () => void }
 
 const ICONE: Record<Variante, keyof typeof Ionicons.glyphMap> = {
+  erro: 'alert-circle-outline',
   atencao: 'warning-outline',
   sucesso: 'checkmark-circle-outline',
   info: 'information-circle-outline',
 }
 
 const cfg = {
+  erro: { fundo: '#FFF2F3', borda: cores.vermelho, cor: cores.vermelho },
   atencao: { fundo: cores.avisoFundo, borda: cores.avisoBorda, cor: cores.avisoTexto },
   sucesso: { fundo: cores.verde, borda: cores.verde, cor: cores.branco },
   info: { fundo: cores.branco, borda: cores.branco, cor: cores.texto },
